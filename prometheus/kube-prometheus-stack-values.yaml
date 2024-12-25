@@ -9,6 +9,7 @@ kubeScheduler:
   enabled: false
 
 alertmanager:
+  enabled: false
   config:
     global:
       smtp_from: you@gmail.com
