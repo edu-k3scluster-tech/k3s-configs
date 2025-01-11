@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-events-provider
+  namespace: redis
+spec:
+  serviceName: redis
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-events-provider
+  template:
+    metadata:
+      labels:
+        app: redis-events-provider
+    spec:
+      containers:
+      - name: redis
+        image: redis:7.0
+        ports:
+        - containerPort: 6379
+          name: redis
+        volumeMounts:
+        - name: pvc-redis-events-provider
+          mountPath: /data
+        args: ["--save", "60", "1", "--appendonly", "yes"]
+      terminationGracePeriodSeconds: 30
+  volumeClaimTemplates:
+  - metadata:
+      name: pvc-redis-events-provider
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
