@@ -26,5 +26,5 @@ rules:
   resources: ["pods"]
   verbs: ["get", "list", "watch"]
 - apiGroups: [""]
-  resources: ["pods/portforward"]
+  resources: ["pods/portforward", "pods/exec"]
   verbs: ["create"]
